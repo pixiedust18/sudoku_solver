@@ -37,22 +37,22 @@ void Sudoku::input()
     char ch;
     cout<<"Enter the size of Matrix :";
     cin>>MAX;
-    do{
-        cout<<"Enter row of grid :";
+    cout<<"State no. of entries";;
+    int entries;
+    cin>>entries;
+    cout<<"Enter rows, columns and corresponding value of grid :";
+    for(int i=0; i<entries; i++)
+    {
         cin>>r;
-        cout<<"Enter column of grid :";
         cin>>c;
-        cout<<"Enter value :";
         cin>>val;
         grid[r][c]=val;
-        if((r>15)||(r<0)||(c>15)||(c<0)||(val>15)||(val<0))
+        if((r>=MAX)||(r<0)||(c>=MAX)||(c<0)||(val>=MAX)||(val<0))
         {
-            ch='y';
-            cout<<"Invalid input\n";
+            cout<<"Invalid input\n. Reenter.";
+            entries++;
         }
-        cout<<"Do you want to have another input(Y/N)";
-        cin>>ch;
-    }while(ch=='y' || ch=='Y');
+    }
 }
 
 int Sudoku::full(int& r, int &c)
@@ -197,15 +197,13 @@ void Sudoku::modify()
 {
     char ch;
     int row,r,c,val;
+    cout<<"Enter row, column, value of grid :";
     do{
-        cout<<"Enter row of grid :";
         cin>>r;
-        cout<<"Enter column of grid :";
         cin>>c;
-        cout<<"Enter value :";
         cin>>val;
         grid[r][c]=val;
-        if((r>15)||(r<0)||(c>15)||(c<0)||(val>15)||(val<0))
+        if((r>MAX)||(r<0)||(c>MAX)||(c<0)||(val>MAX)||(val<0))
         {
             ch='y';
             cout<<"Invalid input\n";
