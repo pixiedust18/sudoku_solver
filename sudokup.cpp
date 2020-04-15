@@ -1,4 +1,3 @@
-#define MAX 9
 #include<math.h>
 #include <iostream>
 using namespace std;
@@ -6,10 +5,13 @@ using namespace std;
 class Sudoku
 {
     public:
-    int grid[MAX][MAX];
+    int MAX;
+    int grid[25][25];
+    //int grid[MAX][MAX];
                       
     Sudoku()
     {    
+        MAX=25;
         for(int i=0; i<MAX; i++)
         {
             for(int j=0; j<MAX; j++)
@@ -25,7 +27,34 @@ class Sudoku
     int full(int &r, int &c);
     int solve();
     void display();
+    void input();
+    void modify();
 };
+
+void Sudoku::input()
+{
+    int row,r,c,val;
+    char ch;
+    cout<<"Enter the size of Matrix :";
+    cin>>MAX;
+    do{
+        cout<<"Enter row of grid :";
+        cin>>r;
+        cout<<"Enter column of grid :";
+        cin>>c;
+        cout<<"Enter value :";
+        cin>>val;
+        grid[r][c]=val;
+        if((r>15)||(r<0)||(c>15)||(c<0)||(val>15)||(val<0))
+        {
+            ch='y';
+            cout<<"Invalid input\n";
+        }
+        cout<<"Do you want to have another input(Y/N)";
+        cin>>ch;
+    }while(ch=='y' || ch=='Y');
+}
+
 int Sudoku::full(int& r, int &c)
 {
     int flag=1;
@@ -104,32 +133,6 @@ int Sudoku::possible(int checkee, int r, int c)
     //cout<<checkee<<":"<<flag<<" "<<"|";
     return flag;
 }
-/*int unfilled_row()
-{
-    for(i=0; i<MAX; i++)
-    {
-        for(int j=0; j<MAX; j++)
-        {
-            if(grid[i][j]==0)
-                return i;
-        }
-    }
-    int x=-1;
-    return x;
-}
-int unfilled_col()
-{
-    for(i=0; i<MAX; i++)
-    {
-        for(int j=0; j<MAX; j++)
-        {
-            if(grid[i][j]==0)
-                return j;
-        }
-    }
-    int x=-1;
-    return x;
-}*/
 
 int Sudoku::solve() //modify
 {
@@ -143,6 +146,7 @@ int Sudoku::solve() //modify
     {
         if(possible(i,r,c))
         {
+
             grid[r][c]=i;
             //display();
             if(solve())
@@ -189,11 +193,44 @@ void Sudoku::display()
     }
     //cout<<"end"<<endl;
 }
+void Sudoku::modify()
+{
+    char ch;
+    int row,r,c,val;
+    do{
+        cout<<"Enter row of grid :";
+        cin>>r;
+        cout<<"Enter column of grid :";
+        cin>>c;
+        cout<<"Enter value :";
+        cin>>val;
+        grid[r][c]=val;
+        if((r>15)||(r<0)||(c>15)||(c<0)||(val>15)||(val<0))
+        {
+            ch='y';
+            cout<<"Invalid input\n";
+        }
+        cout<<"Do you want to have another input(Y/N)";
+        cin>>ch;
+    }while(ch=='y' || ch=='Y');
+}
 int main()
 {
     Sudoku s, test; 
+    s.input();
     s.display();
+
+    char ch;
+    cout<<"would you like to modify anything? Y/n";
+    cin>>ch;
+    if(ch=='y'||ch=='Y')
+    {
+        s.modify();
+        s.display();
+    }
+
     if (!s.solve())  
         cout << "No solution exists";  
-  
+
+    return 0;
 }
